@@ -8,18 +8,30 @@ export type Part = {
 	chords: theory.ProgressionChord[];
 };
 
+/** Whether a key is major or minor. */
+export type Mode = 'major' | 'minor';
+
 /**
  * A jam: one or more parts of chords plus an optional scale to improvise with. Chords are stored
  * relative to the tonic (root interval + quality), so transposing the whole jam is just changing
  * `key`. The scale is always rooted on the key.
+ *
+ * `mode` names the key (E♭ major vs. E♭ minor) and decides how its tonic is spelled; it does not
+ * change the chords. Jams saved before it existed have none and count as major.
  */
 export type Jam = {
 	id: string;
 	name: string;
 	key: theory.PitchClass;
+	mode?: Mode;
 	parts: Part[];
 	scale?: theory.ScaleName;
 };
+
+/** Renders a key the way a chord of that name would be written ('Eb' + 'minor' → 'E♭m'). */
+export function formatKey(tonic: theory.PitchClass, mode: Mode = 'major'): string {
+	return theory.format(tonic) + (mode === 'minor' ? 'm' : '');
+}
 
 /** Names offered as suggestions when naming a part. */
 export const PART_NAMES = ['Intro', 'Verse', 'Pre-chorus', 'Chorus', 'Bridge', 'Solo', 'Outro'];
@@ -50,6 +62,7 @@ export const BARS_PER_ROW = 4;
 
 type Template = {
 	label: string;
+	mode?: Mode;
 	chords: readonly theory.ProgressionChord[];
 	scale?: theory.ScaleName;
 };
@@ -66,7 +79,12 @@ export const TEMPLATES = {
 		chords: theory.progression('quickChange'),
 		scale: 'blues'
 	},
-	minorBlues: { label: 'Minor blues', chords: theory.progression('minorBlues'), scale: 'blues' }
+	minorBlues: {
+		label: 'Minor blues',
+		mode: 'minor',
+		chords: theory.progression('minorBlues'),
+		scale: 'blues'
+	}
 } as const satisfies Record<string, Template>;
 
 export type TemplateName = keyof typeof TEMPLATES;
@@ -79,15 +97,16 @@ export function jamFromTemplate(name: TemplateName): Jam {
 		id: crypto.randomUUID(),
 		name: name === 'blank' ? 'New jam' : template.label,
 		key: 'C',
+		mode: template.mode ?? 'major',
 		parts: [newPart('', template.chords)],
 		scale: template.scale
 	};
 }
 
-/** One-line summary for lists ('C · 2 parts · 12 bars · blues'). */
+/** One-line summary for lists ('Cm · 2 parts · 12 bars · blues'). */
 export function describeJam(jam: Jam): string {
 	const count = jam.parts.reduce((sum, part) => sum + part.chords.length, 0);
-	const summary = [theory.format(jam.key)];
+	const summary = [formatKey(jam.key, jam.mode)];
 	if (jam.parts.length > 1) summary.push(`${jam.parts.length} parts`);
 	summary.push(`${count} ${count === 1 ? 'bar' : 'bars'}`);
 	if (jam.scale) summary.push(theory.formatScaleName(jam.scale));

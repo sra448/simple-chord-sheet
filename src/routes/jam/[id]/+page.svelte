@@ -2,10 +2,11 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { BARS_PER_ROW, newPart, PART_NAMES, partLabel } from '#lib/jam.js';
+	import { BARS_PER_ROW, type Mode, newPart, PART_NAMES, partLabel } from '#lib/jam.js';
 	import { jamStore } from '#lib/jams.svelte.js';
 	import * as theory from '#lib/theory/index.js';
 	import Chord from '#lib/ui/Chord.svelte';
+	import KeyPicker from '#lib/ui/KeyPicker.svelte';
 	import OptionsGroup from '#lib/ui/OptionsGroup.svelte';
 	import Pitch from '#lib/ui/Pitch.svelte';
 
@@ -69,9 +70,10 @@
 	};
 
 	const getKey = (): theory.PitchClass => jam?.key ?? 'C';
-	const setKey = (key: theory.PitchClass) => {
+	const setKey = (key: theory.PitchClass, mode: Mode) => {
 		if (!jam) return;
 		jam.key = key;
+		jam.mode = mode;
 		jamStore.save();
 	};
 
@@ -208,18 +210,9 @@
 			{:else}
 				<h1 class="title">{jam.name}</h1>
 			{/if}
+			<KeyPicker tonic={jam.key} mode={jam.mode ?? 'major'} onchange={setKey} />
 			<button class="btn" type="button" onclick={toggleEditing}>{editing ? 'Done' : 'Edit'}</button>
 		</header>
-
-		<div class="field">
-			<span class="caption">Key</span>
-			<OptionsGroup
-				label="Key"
-				options={theory.ROOTS}
-				format={theory.format}
-				bind:value={getKey, setKey}
-			/>
-		</div>
 
 		<div class="body">
 			<div class="main">

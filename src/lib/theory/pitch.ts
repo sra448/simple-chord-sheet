@@ -53,6 +53,25 @@ export const ROOTS: PitchClass[] = [
 	'B'
 ];
 
+/**
+ * The tonics offered for minor keys — each spelled the way its key signature is usually written
+ * (C♯ minor and G♯ minor rather than D♭ minor and A♭ minor).
+ */
+export const MINOR_ROOTS: PitchClass[] = [
+	'C',
+	'Cs',
+	'D',
+	'Eb',
+	'E',
+	'F',
+	'Fs',
+	'G',
+	'Gs',
+	'A',
+	'Bb',
+	'B'
+];
+
 // PITCHES
 
 const OCTAVES = [0, 1, 2, 3, 4, 5, 6, 7, 8] as const;

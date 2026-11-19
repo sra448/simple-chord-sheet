@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { describeJam, jamFromTemplate, migrateJam, newPart, partLabel } from './jam.js';
+import { describeJam, formatKey, jamFromTemplate, migrateJam, newPart, partLabel } from './jam.js';
 
 describe('migrateJam', () => {
 	it('turns a flat chord list into a single unnamed part', () => {
@@ -38,7 +38,19 @@ describe('partLabel', () => {
 	});
 });
 
+describe('formatKey', () => {
+	it('marks minor keys and treats a missing mode as major', () => {
+		expect(formatKey('Eb')).toBe('E♭');
+		expect(formatKey('Eb', 'major')).toBe('E♭');
+		expect(formatKey('Cs', 'minor')).toBe('C♯m');
+	});
+});
+
 describe('describeJam', () => {
+	it('names minor keys', () => {
+		expect(describeJam(jamFromTemplate('minorBlues'))).toBe('Cm · 12 bars · blues');
+	});
+
 	it('counts bars across parts', () => {
 		const jam = jamFromTemplate('twelveBarBlues');
 		expect(describeJam(jam)).toBe('C · 12 bars · blues');

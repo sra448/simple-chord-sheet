@@ -10,7 +10,7 @@ A little jam helper for playing along with others on a keyboard. A _jam_ is a ha
 - **Parts** — a jam can have several parts (intro, verse, chorus, bridge, …), each with its own chords.
 - **Chord sheet** — four bars per line. Each tile shows the chord name, its tones and its Roman numeral.
 - **Scale** — pick a scale and its tones appear in one line below the chords. The scale is always rooted on the jam's key.
-- **Transposing** — tap another key and the chords and the scale move together.
+- **Transposing** — pick another key, major or minor, and the chords and the scale move together.
 - **Editing** — rename the jam, add, change, reorder and remove bars (triads, 7ths, sus chords), and choose the scale.
 - **Offline** — after the first visit the app works without a connection, and it can be added to the home screen (on an iPad: Share → Add to Home Screen). In view mode the sheet fills the screen.
 
