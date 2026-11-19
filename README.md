@@ -7,6 +7,7 @@ A little jam helper for playing along with others on a keyboard. A _jam_ is a ha
 ## What it does
 
 - **Jams** — start from a blank sheet or a template (12-bar blues, quick-change blues, minor blues).
+- **Parts** — a jam can have several parts (intro, verse, chorus, bridge, …), each with its own chords.
 - **Chord sheet** — four bars per line. Each tile shows the chord name, its tones and its Roman numeral.
 - **Scale** — pick a scale and its tones appear in one line below the chords. The scale is always rooted on the jam's key.
 - **Transposing** — tap another key and the chords and the scale move together.
@@ -23,7 +24,7 @@ Chords are stored relative to the key, as an interval above the tonic plus a qua
 { "root": "P4", "quality": "dominant7" }
 ```
 
-Rendering a jam means realizing those intervals on the current tonic, which is why transposing is nothing more than changing the key.
+A jam is a key, an optional scale and a list of named parts, each holding such chords. Rendering a jam means realizing those intervals on the current tonic, which is why transposing is nothing more than changing the key.
 
 - `src/lib/theory/` — the music-theory library, layered pitch → interval → scale → chord → progression. Originally written for `auryn-play-piano`.
 - `src/lib/jam.ts` — the jam model and templates.

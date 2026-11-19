@@ -1,4 +1,4 @@
-import { type Jam, jamFromTemplate, type TemplateName } from './jam.js';
+import { type Jam, jamFromTemplate, migrateJam, type TemplateName } from './jam.js';
 
 // Jams live in this browser's localStorage. The stored objects are handed out as reactive
 // state: mutate a jam in place, then call save().
@@ -8,7 +8,7 @@ const STORAGE_KEY = 'simple-chord-sheet:jams';
 function load(): Jam[] {
 	try {
 		const parsed: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
-		return Array.isArray(parsed) ? (parsed as Jam[]) : [];
+		return Array.isArray(parsed) ? (parsed as Jam[]).map(migrateJam) : [];
 	} catch {
 		return [];
 	}
