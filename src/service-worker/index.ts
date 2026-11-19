@@ -3,8 +3,12 @@ import { assets, immutable, prerendered } from '$app/manifest';
 import { self } from '$app/service-worker';
 
 // Makes the app work offline: everything the build produced is cached when the worker installs,
-// and served from that cache afterwards. Each deploy gets its own cache; the previous one is
-// dropped once the new worker takes over (the next time the app is opened from scratch).
+// and served from that cache afterwards. Each deploy gets its own cache.
+//
+// A new worker takes over as soon as it has installed, rather than waiting for every window of
+// the app to close: a home-screen app on iOS is suspended, not closed, so it would wait forever.
+// The page reloads itself when that happens (see the root layout), so it never runs old code
+// against the new cache.
 
 const CACHE = `app-${version}`;
 const scope = self.registration.scope;
@@ -23,11 +27,13 @@ async function install() {
 	await cache.addAll([...PRECACHED]);
 	// Only exists in the production build, so it must not fail the install elsewhere.
 	await cache.add(SHELL).catch(() => {});
+	await self.skipWaiting();
 }
 
 async function activate() {
 	const keys = await caches.keys();
 	await Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)));
+	await self.clients.claim();
 }
 
 async function respond(request: Request): Promise<Response> {
