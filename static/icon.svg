@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+	<rect width="512" height="512" fill="#fbf5dd" />
+	<rect x="72" y="72" width="368" height="368" rx="28" fill="#fdfaef" stroke="#306d29" stroke-width="12" />
+	<path d="M348 322h86v112h-86z" fill="#c9e7e1" />
+	<path d="M72 322h368" stroke="#306d29" stroke-width="10" />
+	<text x="256" y="252" text-anchor="middle" font-family="system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="170" font-weight="700" fill="#0d530e">C7</text>
+	<g fill="#0d530e" opacity="0.75">
+		<circle cx="118" cy="378" r="16" />
+		<circle cx="210" cy="378" r="16" />
+		<circle cx="302" cy="378" r="16" />
+		<circle cx="394" cy="378" r="16" />
+	</g>
+</svg>

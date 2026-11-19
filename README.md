@@ -11,6 +11,7 @@ A little jam helper for playing along with others on a keyboard. A _jam_ is a ha
 - **Scale** — pick a scale and its tones appear in one line below the chords. The scale is always rooted on the jam's key.
 - **Transposing** — tap another key and the chords and the scale move together.
 - **Editing** — rename the jam, add, change, reorder and remove bars (triads, 7ths, sus chords), and choose the scale.
+- **Offline** — after the first visit the app works without a connection, and it can be added to the home screen (on an iPad: Share → Add to Home Screen). In view mode the sheet fills the screen.
 
 Jams are stored in your browser's localStorage. They stay on the device you created them on and are not synced anywhere.
 
@@ -29,6 +30,7 @@ Rendering a jam means realizing those intervals on the current tonic, which is w
 - `src/lib/jams.svelte.ts` — the localStorage-backed store.
 - `src/lib/ui/` — chord tile, pitch tile and option group components.
 - `src/routes/` — the jam list (`/`) and the jam sheet (`/jam/[id]`).
+- `src/service-worker/` — caches the built app so it runs offline.
 
 ## Developing
 
