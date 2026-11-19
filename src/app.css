@@ -1,0 +1,50 @@
+:root {
+	/* Palette — Monokai-ish greens on warm beige. */
+	--color-bg: #fbf5dd; /* page background */
+	--color-surface: #fdfaef; /* cards, tiles, button fills */
+	--color-surface-hover: #f1ead0; /* hover state for surfaces */
+	--color-border: #306d29; /* borders, selected fill, focus ring */
+	--color-text: #0d530e; /* text, noteheads, clef (ink) */
+	--color-accidental: #499c9d; /* accidental glyphs / hints (teal) */
+	--color-accidental-bg: #c9e7e1; /* accidental tile background (light teal) */
+	--color-indicator: rgb(119, 188, 111); /* active-note indicator on the keyboard */
+}
+
+body {
+	margin: auto;
+	padding: clamp(1rem, 4vw, 2rem);
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	font-family: system-ui, sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+/* Plain action button — same look as the option tiles. */
+.btn {
+	padding: 0.35rem 0.7rem;
+	border: 1px solid var(--color-border);
+	border-radius: 6px;
+	background-color: var(--color-surface);
+	color: var(--color-text);
+	font: inherit;
+	font-size: 0.9rem;
+	line-height: 1.2;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+	background-color: var(--color-surface-hover);
+}
+
+.btn:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+
+.btn:focus-visible {
+	outline: 2px solid var(--color-border);
+	outline-offset: 2px;
+}
