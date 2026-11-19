@@ -1,56 +1,50 @@
-# sv
+# Simple Chord Sheet
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A little jam helper for playing along with others on a keyboard. A _jam_ is a handful of chords plus, optionally, a scale to improvise with — a 12-bar blues, say, shown as three lines of chords with the blues scale underneath.
 
-## Creating a project
+**Live version: <https://sra448.github.io/simple-chord-sheet/>**
 
-If you're seeing this, you've probably already done this step. Congrats!
+## What it does
 
-```sh
-# create a new project
-npx sv create my-app
+- **Jams** — start from a blank sheet or a template (12-bar blues, quick-change blues, minor blues).
+- **Chord sheet** — four bars per line. Each tile shows the chord name, its tones and its Roman numeral.
+- **Scale** — pick a scale and its tones appear in one line below the chords. The scale is always rooted on the jam's key.
+- **Transposing** — tap another key and the chords and the scale move together.
+- **Editing** — rename the jam, add, change, reorder and remove bars (triads, 7ths, sus chords), and choose the scale.
+
+Jams are stored in your browser's localStorage. They stay on the device you created them on and are not synced anywhere.
+
+## How it works
+
+Chords are stored relative to the key, as an interval above the tonic plus a quality:
+
+```json
+{ "root": "P4", "quality": "dominant7" }
 ```
 
-To recreate this project with the same configuration:
+Rendering a jam means realizing those intervals on the current tonic, which is why transposing is nothing more than changing the key.
 
-```sh
-# recreate this project
-pnpm dlx sv@1.6.0 create --template minimal --types ts --add prettier eslint vitest="usages:unit" --install pnpm simple-chord-sheet
-```
-
-## Adding features
-
-Add features to your project with `sv add`:
-
-```sh
-npx sv add
-```
-
-For example, to add Tailwind CSS:
-
-```sh
-npx sv add tailwindcss
-```
+- `src/lib/theory/` — the music-theory library, layered pitch → interval → scale → chord → progression. Originally written for `auryn-play-piano`.
+- `src/lib/jam.ts` — the jam model and templates.
+- `src/lib/jams.svelte.ts` — the localStorage-backed store.
+- `src/lib/ui/` — chord tile, pitch tile and option group components.
+- `src/routes/` — the jam list (`/`) and the jam sheet (`/jam/[id]`).
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Built with SvelteKit and Svelte 5, using pnpm.
 
 ```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm install
+pnpm dev        # start the dev server
+pnpm test       # unit tests for the theory library
+pnpm check      # type-check
+pnpm lint       # prettier + eslint
+pnpm build      # static build into ./build
 ```
 
-## Building
+## Deploying
 
-To create a production version of your app:
+Every push to `main` runs `.github/workflows/deploy.yml`, which tests, builds and publishes the site to GitHub Pages.
 
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+The site is fully static (`adapter-static`). Since jams only exist in the browser, `404.html` doubles as the app shell for jam URLs. The base path comes from the `BASE_PATH` environment variable, which the workflow sets to `/<repo-name>`.
