@@ -16,7 +16,8 @@
 	.pitch {
 		display: flex;
 		aspect-ratio: 1;
-		width: 40px;
+		width: var(--pitch-size, 2.5rem);
+		font-size: calc(var(--pitch-size, 2.5rem) * 0.4);
 		justify-content: center;
 		align-items: center;
 		border: 1px solid var(--color-border);

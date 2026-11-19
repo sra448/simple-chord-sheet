@@ -10,16 +10,4 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="app">
-	{@render children()}
-</div>
-
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
-		max-width: 40rem;
-		margin: 0 auto;
-	}
-</style>
+{@render children()}

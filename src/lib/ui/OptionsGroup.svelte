@@ -57,6 +57,14 @@
 			color 0.15s ease;
 	}
 
+	/* Roomier targets for fingers. */
+	@media (pointer: coarse) {
+		.option span {
+			padding: 0.55rem 0.9rem;
+			font-size: 1rem;
+		}
+	}
+
 	.option:hover span {
 		background-color: var(--color-surface-hover);
 	}

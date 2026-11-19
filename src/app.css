@@ -8,11 +8,13 @@
 	--color-accidental: #499c9d; /* accidental glyphs / hints (teal) */
 	--color-accidental-bg: #c9e7e1; /* accidental tile background (light teal) */
 	--color-indicator: rgb(119, 188, 111); /* active-note indicator on the keyboard */
+
+	--page-pad: clamp(1rem, 4vw, 2rem); /* space around the page content */
 }
 
 body {
 	margin: auto;
-	padding: clamp(1rem, 4vw, 2rem);
+	padding: var(--page-pad);
 	background-color: var(--color-bg);
 	color: var(--color-text);
 	font-family: system-ui, sans-serif;
@@ -47,4 +49,12 @@ body {
 .btn:focus-visible {
 	outline: 2px solid var(--color-border);
 	outline-offset: 2px;
+}
+
+/* Roomier targets for fingers. */
+@media (pointer: coarse) {
+	.btn {
+		padding: 0.55rem 0.9rem;
+		font-size: 1rem;
+	}
 }

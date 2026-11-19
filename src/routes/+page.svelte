@@ -14,35 +14,45 @@
 	<title>Jams</title>
 </svelte:head>
 
-<h1>Jams</h1>
+<div class="home">
+	<h1>Jams</h1>
 
-{#if jamStore.all.length === 0}
-	<p class="empty">No jams yet. Start one below.</p>
-{:else}
-	<ul class="jams">
-		{#each jamStore.all as jam (jam.id)}
-			<li>
-				<a href={resolve('/jam/[id]', { id: jam.id })}>
-					<span class="name">{jam.name}</span>
-					<span class="summary">{describeJam(jam)}</span>
-				</a>
-			</li>
-		{/each}
-	</ul>
-{/if}
+	{#if jamStore.all.length === 0}
+		<p class="empty">No jams yet. Start one below.</p>
+	{:else}
+		<ul class="jams">
+			{#each jamStore.all as jam (jam.id)}
+				<li>
+					<a href={resolve('/jam/[id]', { id: jam.id })}>
+						<span class="name">{jam.name}</span>
+						<span class="summary">{describeJam(jam)}</span>
+					</a>
+				</li>
+			{/each}
+		</ul>
+	{/if}
 
-<section>
-	<h2>New jam</h2>
-	<div class="templates">
-		{#each TEMPLATE_NAMES as template (template)}
-			<button class="btn" type="button" onclick={() => create(template)}>
-				{TEMPLATES[template].label}
-			</button>
-		{/each}
-	</div>
-</section>
+	<section>
+		<h2>New jam</h2>
+		<div class="templates">
+			{#each TEMPLATE_NAMES as template (template)}
+				<button class="btn" type="button" onclick={() => create(template)}>
+					{TEMPLATES[template].label}
+				</button>
+			{/each}
+		</div>
+	</section>
+</div>
 
 <style>
+	.home {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		max-width: 40rem;
+		margin: 0 auto;
+	}
+
 	h1 {
 		margin: 0;
 	}

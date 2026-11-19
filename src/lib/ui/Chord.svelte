@@ -29,9 +29,11 @@
 	.chord {
 		position: relative;
 		box-sizing: border-box;
+		/* Fills whatever cell it is placed in; the type scales with the tile. */
 		width: 100%;
-		aspect-ratio: 1;
-		container-type: inline-size;
+		height: 100%;
+		min-height: 0;
+		container-type: size;
 
 		display: flex;
 		flex-direction: column;
@@ -48,9 +50,9 @@
 
 	.roman {
 		position: absolute;
-		top: 0.4rem;
-		left: 0.5rem;
-		font-size: clamp(0.7rem, 13cqi, 1rem);
+		top: clamp(0.3rem, 4cqb, 0.7rem);
+		left: clamp(0.4rem, 5cqi, 0.9rem);
+		font-size: clamp(0.7rem, min(13cqi, 17cqb), 1.5rem);
 		font-weight: 500;
 		opacity: 0.6;
 	}
@@ -59,8 +61,8 @@
 		flex: 2;
 		display: flex;
 		align-items: center;
-		font-size: clamp(0.9rem, 19cqi, 1.6rem);
-		padding-top: 0.8rem;
+		font-size: clamp(0.9rem, min(19cqi, 30cqb), 4rem);
+		padding-top: 10cqb;
 		font-weight: 600;
 		line-height: 1;
 	}
@@ -71,7 +73,7 @@
 		display: flex;
 		text-align: center;
 
-		font-size: clamp(0.65rem, 12cqi, 0.9rem);
+		font-size: clamp(0.65rem, min(12cqi, 15cqb), 1.5rem);
 		letter-spacing: 0.02em;
 		opacity: 0.75;
 		border-top: 1px solid var(--color-border);
